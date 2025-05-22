@@ -59,13 +59,13 @@ export default function Header() {
   if (!isMounted) return null
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-14 items-center">
-        <Link href="/" className="flex items-center gap-2 font-semibold">
-          <DollarSign className="h-5 w-5" />
-          <span>ExpenseTracker</span>
+    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60" >
+      <div className="container flex h-14 items-center" >
+        <Link href="/" className="flex items-center gap-2 font-semibold" >
+          
+          <span>Expense Tracker</span>
         </Link>
-        <div className="hidden md:flex flex-1 items-center justify-end space-x-4">
+        <div className="hidden md:flex flex-1 items-center justify-end space-x-4" style={{alignItems: "right", justifyContent: "right"}}>
           {user ? (
             <>
               <nav className="flex items-center space-x-2">
