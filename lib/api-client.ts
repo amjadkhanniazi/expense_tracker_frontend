@@ -1,6 +1,8 @@
 import axios from "axios"
 
-const BASE_URL = "https://expense-tracker-backend-coral.vercel.app"
+const BASE_URL = "https://expense-tracker-backend-coral.vercel.app" // Local development URL
+
+//http://localhost:5000
 
 const apiClient = axios.create({
   baseURL: BASE_URL,

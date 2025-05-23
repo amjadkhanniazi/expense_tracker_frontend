@@ -1,4 +1,57 @@
-export default function Home() {
+"use client"
+
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { useToast } from "@/components/ui/use-toast"
+import AuthService from "@/lib/auth-service"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { ArrowLeft, Loader2 } from "lucide-react"
+import Link from "next/link"
+import { useState } from "react"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
+
+const forgotPasswordSchema = z.object({
+  email: z.string().email({ message: "Please enter a valid email address" }),
+})
+
+type ForgotPasswordFormValues = z.infer<typeof forgotPasswordSchema>
+
+export default function ForgotPasswordPage() {
+  const { toast } = useToast()
+  const [isLoading, setIsLoading] = useState(false)
+  const [isSubmitted, setIsSubmitted] = useState(false)
+
+  const form = useForm<ForgotPasswordFormValues>({
+    resolver: zodResolver(forgotPasswordSchema),
+    defaultValues: {
+      email: "",
+    },
+  })
+
+  async function onSubmit(data: ForgotPasswordFormValues) {
+    setIsLoading(true)
+    try {
+      await AuthService.forgotPassword({ email: data.email })
+      setIsSubmitted(true)
+      toast({
+        title: "Reset email sent",
+        description: "If an account with that email exists, we've sent password reset instructions.",
+      })
+    } catch (error) {
+      // Don't show specific errors for security reasons
+      toast({
+        title: "Reset email sent",
+        description: "If an account with that email exists, we've sent password reset instructions.",
+      })
+      setIsSubmitted(true)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   return (
     <div className="flex flex-col items-center min-h-[100dvh]">
       <main className="flex-1">
@@ -17,7 +70,6 @@ export default function Home() {
                 <Link href="/login">
                   <Button>
                     Get Started
-                    <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </Link>
                 <Link href="/signup">
