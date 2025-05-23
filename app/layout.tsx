@@ -26,9 +26,11 @@ export default function RootLayout({
       <body className={cn("min-h-screen bg-background font-sans antialiased", inter.className)}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <Providers>
+            <div className="max-w-[1440px] flex-col items-center">
             <Header />
             {children}
             <Toaster />
+            </div>
           </Providers>
         </ThemeProvider>
       </body>
