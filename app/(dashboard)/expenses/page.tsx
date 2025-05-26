@@ -669,7 +669,7 @@ export default function ExpensesPage() {
               {transactions
                 .filter((t) => t.type === "expense")
                 .map((transaction) => {
-                  const category = categories.find((c) => c._id === transaction.category)
+                  const category = categories.find((c) => c._id === transaction.category._id)
 
                   return (
                     <Card key={transaction._id}>
@@ -846,7 +846,7 @@ export default function ExpensesPage() {
             {categories.length > 0 ? (
               categories.map((category) => {
                 const categoryTransactions = transactions.filter(
-                  (t) => t.category === category._id && t.type === "expense",
+                  (t) => t.category._id === category._id && t.type === "expense",
                 )
                 const total = categoryTransactions.reduce((sum, transaction) => sum + transaction.amount, 0)
 
@@ -953,10 +953,10 @@ export default function ExpensesPage() {
           {budgets.length > 0 ? (
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {budgets.map((budget) => {
-                const category = categories.find((c) => c._id === budget.category)
+                const category = categories.find((c) => c._id === budget.category._id)
                 const categoryTransactions = transactions.filter(
                   (t) =>
-                    t.category === budget.category &&
+                    t.category._id === budget.category._id &&
                     t.type === "expense" &&
                     new Date(t.date).getMonth() + 1 === budget.month &&
                     new Date(t.date).getFullYear() === budget.year,
